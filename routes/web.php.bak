@@ -1,0 +1,212 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+Route::get('/', [App\Http\Controllers\HomeController::class, 'homepage'])->name('home');
+// Route::get('/', function () {
+//     return view('home');
+// });
+Route::get('/fit-plans',[App\Http\Controllers\FitplansController::class, 'index']);
+Route::get('/getdata_fit_plans',[App\Http\Controllers\FitplansController::class, 'getdata_fit_plans']);
+
+Route::get('/fit-plans-detail/{tainerid}/{id}',[App\Http\Controllers\FitplansController::class, 'fit_plans_detail']);
+Route::get('/payment-workout-by-yourself/{id}',[App\Http\Controllers\FitplansController::class, 'workout_payment']);
+Route::get('/fit-plan-by-yourself-after-payment/{id}',[App\Http\Controllers\FitplansController::class, 'after_payment']);
+
+
+
+//Route::get('/search_fitplans/{search}',[App\Http\Controllers\FitplansController::class, 'search_fitplans']);
+Route::post('/search_fitplans',[App\Http\Controllers\FitplansController::class, 'search_fitplans'])->name("search_fitplans");
+// Route::group(['middleware' => 'prevent-back-history'],function(){
+
+Route::post('/filter_fitplans',[App\Http\Controllers\FitplansController::class, 'filter_fitplans'])->name("filter_fitplans");
+
+
+//******************************website************************
+/*
+Route::group(['middleware'=>'firnesstrainer'],function(){
+   
+    Route::post('/leave_manage',[App\Http\Controllers\leaveManageController::class, 'leave_manage'])->name("leave_manage");
+        Route::get('/getAllleave_manage',[App\Http\Controllers\leaveManageController::class, 'getAllleave_manage']);
+         Route::get('/leaveonoff',[App\Http\Controllers\leaveManageController::class, 'leaveonoff']);
+        
+    Route::get('/trainer-edit-profile/{id}',[App\Http\Controllers\FitnessTrainerController::class, 'trainer_edit_profile']);
+
+Route::get('/trainer-publishe-profile/{id}',[App\Http\Controllers\FitnessTrainerController::class, 'trainer_publishe_profile']);
+    Route::get('/fitness_trainer_login_my_profile_view',[App\Http\Controllers\FitnessTrainerController::class, 'fitness_trainer_login_my_profile_view']);
+    Route::Post('/website_trainer_edit',[App\Http\Controllers\FitnessTrainerController::class, 'website_trainer_edit'])->name('website_trainer_edit');
+Route::Post('/website_trainer_change_password',[App\Http\Controllers\FitnessTrainerController::class, 'website_trainer_change_password'])->name('website_trainer_change_password');
+
+///=--------------------------Set-Availability------------------------------------------------
+
+Route::get('/Set-Availability',[App\Http\Controllers\SetAvailabilityController::class, 'index']);
+
+Route::Post('/firness_trainer_time_slot',[App\Http\Controllers\SetAvailabilityController::class, 'firness_trainer_time_slot'])->name('firness_trainer_time_slot');
+
+Route::Post('/edit_firness_trainer_time_slot',[App\Http\Controllers\SetAvailabilityController::class, 'edit_firness_trainer_time_slot'])->name('edit_firness_trainer_time_slot');
+
+Route::Post('/add_firness_trainer_set_working_day',[App\Http\Controllers\SetAvailabilityController::class, 'add_firness_trainer_set_working_day'])->name('add_firness_trainer_set_working_day');
+
+
+});
+  */ 
+
+Route::get('/aboutus', [App\Http\Controllers\AboutusController::class, 'index']);
+
+//Route::get('/Be-a-Trainer', [App\Http\Controllers\FitnessTrainerController::class, 'index']);
+
+//----------------------------fitness-trainer-data---------------------------
+
+Route::post('/fitness-trainer-data',[App\Http\Controllers\FitnessTrainerController::class, 'fitness_trainer_data'])->name('fitness-trainer-data');
+
+Route::post('/set_password_fitness_trainer',[App\Http\Controllers\FitnessTrainerController::class, 'set_password_fitness_trainer'])->name('set_password_fitness_trainer')->middleware('rememberme');
+
+
+Route::get('/manage_business_del/{id}',[App\Http\Controllers\FitnessTrainerController::class, 'manage_business_del'])->name('manage_business_del')->middleware('rememberme');
+
+
+Route::get('/manage_business_view/{id}',[App\Http\Controllers\FitnessTrainerController::class, 'fitness_trainer_view'])->name('manage_business_view')->middleware('rememberme');
+
+Route::post('/manage_business_editt',[App\Http\Controllers\FitnessTrainerController::class, 'firness_trainer_update'])->name('manage_business_editt')->middleware('rememberme');
+
+Route::post('/fitness_trainer_filter',[App\Http\Controllers\FitnessTrainerController::class, 'fitness_trainer_filter'])->name('fitness_trainer_filter')->middleware('rememberme');
+
+Route::post('/business_review__remove',[App\Http\Controllers\FitnessTrainerController::class, 'business_review__remove'])->name('business_review__remove')->middleware('rememberme');
+
+Route::get('/ReviewandRattingManagement',[App\Http\Controllers\FitnessTrainerController::class, 'ReviewandRattingManagement'])->middleware('rememberme');
+
+//
+Route::post('/fitness_trainer_signin',[App\Http\Controllers\FitnessTrainerController::class, 'checklogin'])->name('fitness_trainer_signin');
+
+Route::get('/fitness-trainer-login-my-profile',[App\Http\Controllers\FitnessTrainerController::class, 'fitness_trainer_login_my_profile'])->name('fitness-trainer-login-my-profile');
+
+
+Route::get('/fitness_trainer_logout',[App\Http\Controllers\FitnessTrainerController::class, 'fitness_trainer_logout']);
+
+
+
+
+
+Route::get('/trainer-forgot-password',[App\Http\Controllers\FitnessTrainerController::class, 'trainer_forgot_password']);
+
+Route::post('/firness_forget_passwordcheck',[App\Http\Controllers\FitnessTrainerController::class, 'firness_forget_passwordcheck'])->name('firness_forget_passwordcheck');
+
+Route::get('/reset-password/{token}',[App\Http\Controllers\FitnessTrainerController::class, 'trainer_reset_password']);
+
+Route::Post('/trainer_updatepassword',[App\Http\Controllers\FitnessTrainerController::class, 'trainer_updatepassword'])->name('trainer_updatepassword');
+
+
+// Route::get('/emailverification', function () {
+//    return view('Pages.email-verification');
+// });
+
+
+
+
+Route::get('/signin', function () {
+   Session::forget('fitness_tranner_id');
+   Session::forget('name');
+   Session::forget('email');
+   Session::forget('mobile_number');
+   Session::forget('upload_doc');
+   Session::forget('address');
+    return view('/signin');
+});
+
+//******************************website************************
+
+  
+// if(empty(session('user_id')) && empty(session('user_id')) && empty(session('user_id'))){
+//    Route::get('/login', [App\Http\Controllers\backend\Admin::class, 'index'])->name('login');
+// }else{
+//    Route::get('/', [App\Http\Controllers\backend\Admin::class, 'dashboard'])->middleware('rememberme');
+// }
+
+//--------------------------------workout_plans---------------------------------
+Route::get('workout_plans',[App\Http\Controllers\backend\workoutPlansController::class, 'index'])->middleware('rememberme');
+
+Route::get('add_workout_plan',[App\Http\Controllers\backend\workoutPlansController::class, 'add_workout_plan_view'])->middleware('rememberme');
+Route::post('/workout_plan_store',[App\Http\Controllers\backend\workoutPlansController::class, 'store'])->name('workout_plan_store')->middleware('rememberme');
+
+Route::get('/workout_plans_del/{id}',[App\Http\Controllers\backend\workoutPlansController::class, 'delete'])->name('workout_plans_del')->middleware('rememberme');
+
+Route::post('/workoutplansAll',[App\Http\Controllers\backend\workoutPlansController::class, 'deleteAll'])->name('workoutplansAll')->middleware('rememberme');
+Route::any('/workout_plans_edit/{id}', [App\Http\Controllers\backend\workoutPlansController::class, 'edit'])->name('workout_plans_edit')->middleware('rememberme');
+
+Route::post('/workout_plan_update',[App\Http\Controllers\backend\workoutPlansController::class, 'workout_plan_update'])->name('workout_plan_update')->middleware('rememberme');
+
+Route::post('/workout_plans_active_desctive',[App\Http\Controllers\backend\workoutPlansController::class, 'workout_plans_active_desctive'])->name('workout_plans_active_desctive')->middleware('rememberme');
+
+//--------------------------------FitnessTrainer Start---------------------------------
+
+Route::get('manager_business',[App\Http\Controllers\FitnessTrainerController::class, 'getdata'])->middleware('rememberme');
+Route::get('manager_category',[App\Http\Controllers\FitnessTrainerController::class, 'getdatacategory'])->middleware('rememberme');
+Route::get('admin_subscriptions',[App\Http\Controllers\FitnessTrainerController::class, 'getdataSubscriptions'])->middleware('rememberme');
+Route::get('/subscriptions_edit/{id}', [App\Http\Controllers\FitnessTrainerController::class, 'editSubscriptions'])->middleware('rememberme');
+Route::post('/subscriptions-update', [App\Http\Controllers\FitnessTrainerController::class, 'subscriptionsUpdate'])->name('subscriptions-update')->middleware('rememberme');
+
+
+// });
+// if(empty(session('user_id')) && empty(session('user_id')) && empty(session('user_id'))){
+//    Route::get('/login', [App\Http\Controllers\backend\Admin::class, 'index'])->name('login');
+// }else{
+//    Route::get('/', [App\Http\Controllers\backend\Admin::class, 'dashboard']);
+
+// }
+
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/login', [App\Http\Controllers\backend\Admin::class, 'index'])->name('login');
+//Route::get('/', [App\Http\Controllers\backend\Admin::class, 'dashboard'])->middleware('rememberme');; 
+
+Route::post('custom-login', [App\Http\Controllers\backend\Admin::class, 'customLogin'])->name('login.custom'); 
+Route::get('signout', [App\Http\Controllers\backend\Admin::class, 'signOut'])->name('signout')->middleware('rememberme');
+
+
+
+Route::post('/user_change_password', [App\Http\Controllers\backend\userController::class, 'user_change_password'])->name('user_change_password'); 
+Route::post('/update_admin_profile', [App\Http\Controllers\backend\userController::class, 'update_admin_profile'])->name('update_admin_profile');  
+
+
+Route::get('/fitness-survey', function () {
+   return view('Pages.fitness-survey');
+});
+//user manage//
+
+
+
+ Route::get('/add_user', [App\Http\Controllers\backend\userController::class, 'create'])->name('add_user')->middleware('rememberme');
+ Route::post('store-data', [App\Http\Controllers\backend\userController::class, 'store'])->name('store-data')->middleware('rememberme');
+ Route::get('/user_view/{id}', [App\Http\Controllers\backend\userController::class, 'userView'])->middleware('rememberme');
+ Route::get('/user_edit/{id}', [App\Http\Controllers\backend\userController::class, 'edit'])->name('user_edit')->middleware('rememberme');
+ Route::post('/update_data/', [App\Http\Controllers\backend\userController::class, 'updateData'])->middleware('rememberme');
+ 
+ //Route::DELETE('/user_delete/{id}', [App\Http\Controllers\backend\userController::class, 'delete'])->name('user_delete');
+ Route::get('/user_delete/{id}', [App\Http\Controllers\backend\userController::class, 'delete'])->name('user_delete')->middleware('rememberme');
+
+
+Route::post('/notification', [App\Http\Controllers\admin\Admin::class, 'notification'])->name('notification');
+
+
+Route::get('/admin', [App\Http\Controllers\admin\Admin::class, 'index'])->name('login');
+Route::get('/dashboard', [App\Http\Controllers\admin\Admin::class, 'dashboard'])->middleware('rememberme'); 
+Route::get('/user_list', [App\Http\Controllers\admin\userController::class, 'index'])->name('user_list')->middleware('rememberme'); 
+Route::get('/user-view/{id}', 'App\Http\Controllers\admin\userController@userview');
+
+Route::get('/user_list', [App\Http\Controllers\admin\userController::class, 'index'])->name('user_list')->middleware('rememberme'); 
+Route::get('/user-view/{id}', 'App\Http\Controllers\admin\userController@userview');
+Route::post('/changeStatus/{id}', [App\Http\Controllers\admin\userController::class, 'changeStatus'])->name('changeStatus')->middleware('rememberme');
+Route::post('/userchangestatus', [App\Http\Controllers\admin\userController::class, 'userchangeStatus'])->name('userchangeStatus')->middleware('rememberme');
+Route::post('/userchangestatusactive', [App\Http\Controllers\admin\userController::class, 'userchangestatusactive'])->name('userchangestatusactive')->middleware('rememberme');
+Route::get('/user_edit/{id}', [App\Http\Controllers\admin\userController::class, 'edit'])->name('user_edit')->middleware('rememberme');
+Route::post('/update_data', [App\Http\Controllers\admin\userController::class, 'updateData'])->middleware('rememberme');
+Route::get('/user_delete/{id}', [App\Http\Controllers\admin\userController::class, 'delete'])->name('user_delete')->middleware('rememberme');
